@@ -5,7 +5,7 @@ class PostSerializer < ActiveModel::Serializer
   belongs_to :user
   # Calls the Category serializer
   def category
-    ActiveModel::SerializableResource.new(object.category, each_serializer: CategorySerializer)
+    ActiveModel::SerializableResource.new(object.category, each_serializer: CategoriesSerializer)
   end
 
 end

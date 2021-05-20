@@ -14,4 +14,23 @@ class Post < ApplicationRecord
 
   scope :title, -> title {where("title LIKE ?", "%"+title+"%")}
   scope :category, -> category{where(category_id: category)}
+
+
+  # Validates the EXISTENCE of the url provided in the image field (a status 200)
+  # if it exists, it accepts it into the database, else, it deletes it
+  validate :validate_url
+
+  def validate_url
+    unless self.image.blank?
+      begin
+        source = URI.parse(self.image)
+        resp = Net::HTTP.get_response(source)
+      rescue URI::InvalidURIError
+        errors.add(:image,'is an Invalid url (doesnt exist)')
+      rescue SocketError 
+        errors.add(:image,'is Invalid')
+      end
+    end
+  end
+
 end

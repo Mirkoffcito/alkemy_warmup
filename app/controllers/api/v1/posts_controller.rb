@@ -17,7 +17,7 @@ class Api::V1::PostsController < ApplicationController
   # GET /posts/1
   def show
     if @post.kept?
-      render json: @post, each_serializer: PostSerializer
+      render json: @post, serializer: PostSerializer
     else
       # Si el post sufrio de un soft_delete, devuelve un error 404 not found
       render json: @post.errors, status: :not_found
@@ -29,7 +29,7 @@ class Api::V1::PostsController < ApplicationController
     @post = current_api_user.posts.new(post_params)
 
     if @post.save
-      render json: @post, status: :created, location: api_post_url(@post)
+      render json: @post, serializer: PostSerializer, status: :created, location: api_post_url(@post)
     else
       render json: @post.errors, status: :unprocessable_entity
     end
