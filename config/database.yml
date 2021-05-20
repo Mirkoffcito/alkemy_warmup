@@ -1,0 +1,29 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+
+development:
+  <<: *default
+  database: warmup_api_development
+
+  username: postgres
+  password: password
+  host: localhost
+
+test:
+  <<: *default
+  database: warmup_api_test
+
+  username: postgres
+  password: password
+  host: localhost
+
+#   production:
+#     url: <%= ENV['MY_APP_DATABASE_URL'] %>
+
+production:
+  <<: *default
+  database: warmup_api_production
+  username: warmup_api
+  password: <%= ENV['WARMUP_API_DATABASE_PASSWORD'] %>
