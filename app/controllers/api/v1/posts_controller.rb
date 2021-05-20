@@ -8,14 +8,20 @@ class Api::V1::PostsController < ApplicationController
 
   # GET /posts
   def index
-    @posts = current_api_user.posts.all
+    # Sólo hace un query de los posts que no han sufrido un soft_delete
+    @posts = current_api_user.posts.kept
 
     render json: (apply_scopes(@posts)).order(created_at: @order), each_serializer: PostsSerializer
   end
 
   # GET /posts/1
   def show
-    render json: @post, each_serializer: PostSerializer
+    if @post.kept?
+      render json: @post, each_serializer: PostSerializer
+    else
+      # Si el post sufrio de un soft_delete, devuelve un error 404 not found
+      render json: @post.errors, status: :not_found
+    end
   end
 
   # POST /posts
@@ -40,7 +46,8 @@ class Api::V1::PostsController < ApplicationController
 
   # DELETE /posts/1
   def destroy
-    @post.destroy
+    # it will soft_delete records instead of completely deleting them.
+    @post.discard
   end
 
   private
@@ -51,7 +58,7 @@ class Api::V1::PostsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def post_params
-      params.require(:post).permit(:title, :content, :image, :category_id)
+      params.require(:post).permit(:title, :content, :image, :category_id,)
     end
 
     def order_params

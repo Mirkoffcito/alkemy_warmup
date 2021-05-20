@@ -41,3 +41,5 @@ gem "devise_token_auth", "~> 1.1"
 gem "active_model_serializers", "~> 0.10.12"
 
 gem "has_scope", "~> 0.8.0"
+
+gem "discard", "~> 1.2"

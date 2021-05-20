@@ -1,4 +1,8 @@
 class Post < ApplicationRecord
+  # Discard is in charge of the soft_deletion of records
+  # Post.discard will soft_delete a post
+  include Discard::Model
+
   belongs_to :category
   belongs_to :user
 
