@@ -5,5 +5,10 @@ FactoryBot.define do
     image { 'https://cdn2.thecatapi.com/images/YfwpkuxH4.jpg' }
     user
     category
+
+    factory :invalid_post do
+      title { nil }
+    end
+
   end
 end

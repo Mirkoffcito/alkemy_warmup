@@ -2,7 +2,7 @@ require 'api_constraints.rb'
 
 Rails.application.routes.draw do
   resources :categories
-  namespace :api, default: {format: :json} do
+  namespace :api, defaults: { format: :json } do
     
     # This sets the authentication route for devise
     # localhost:3000/api/auth/...

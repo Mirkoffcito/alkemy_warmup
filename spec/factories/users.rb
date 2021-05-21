@@ -6,4 +6,9 @@ FactoryBot.define do
       password { '12345678' }
       password_confirmation { password }
     end
+
+    factory :user_without_uid do
+      uid { '' }
+    end
+
   end
