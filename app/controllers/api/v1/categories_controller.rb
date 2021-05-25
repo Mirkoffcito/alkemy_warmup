@@ -17,6 +17,7 @@ class Api::V1::CategoriesController < ApplicationController
   # POST /categories
   def create
     @category = Category.new(category_params)
+    authorize @category
 
     if @category.save
       render json: @category, serializer: CategoriesSerializer, status: :created, location: @category
@@ -27,6 +28,7 @@ class Api::V1::CategoriesController < ApplicationController
 
   # PATCH/PUT /categories/1
   def update
+    authorize @category
     if @category.update(category_params)
       render json: @category, serializer: CategoriesSerializer
     else
@@ -36,6 +38,7 @@ class Api::V1::CategoriesController < ApplicationController
 
   # DELETE /categories/1
   def destroy
+    authorize @category
     @category.destroy
   end
 

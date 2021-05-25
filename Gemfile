@@ -43,3 +43,7 @@ gem "active_model_serializers", "~> 0.10.12"
 gem "has_scope", "~> 0.8.0"
 
 gem "discard", "~> 1.2"
+
+gem "pundit", "~> 2.1"
+
+# How to add gem with version? -> bundle add gem_name
